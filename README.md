@@ -120,7 +120,6 @@ python --version
 python3.12 -m venv .venv
 source .venv/bin/activate        # Windows: .venv\Scripts\activate
 pip install -r requirements-dev.txt
-pre-commit install                # one time only, do not run this again
 cp .env.example .env
 uvicorn src.main:app --reload
 ```
