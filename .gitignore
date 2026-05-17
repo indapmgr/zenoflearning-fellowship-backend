@@ -22,6 +22,9 @@ env/
 htmlcov/
 .coverage
 
+# Project files
+*.xlsx
+
 # OS
 .DS_Store
 Thumbs.db

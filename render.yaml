@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: zenoflearning-backend-dev
+    runtime: docker
+    repo: https://github.com/zen-of-learning/zenoflearning-fellowship-backend
+    branch: develop
+    region: ohio
+    plan: free
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: APP_ENV
+        value: development
+
+  - type: web
+    name: zenoflearning-backend-prod
+    runtime: docker
+    repo: https://github.com/zen-of-learning/zenoflearning-fellowship-backend
+    branch: main
+    region: ohio
+    plan: free
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: APP_ENV
+        value: production

@@ -1,0 +1,39 @@
+name: CI Pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+  push:
+    branches:
+      - main
+      - develop
+
+env:
+  DOCKER_BUILDKIT: 1
+  COMPOSE_DOCKER_CLI_BUILD: 1
+
+jobs:
+  fellowship-backend-ci:
+    name: Build, Format, Lint, Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Create environment file from example
+        run: cp .env.example .env
+
+      - name: Build fellowship backend container
+        run: docker compose build
+
+      - name: Check code formatting (ruff format)
+        run: docker compose run --rm api ruff format --check .
+
+      - name: Run linter (ruff check)
+        run: docker compose run --rm api ruff check .
+
+      - name: Run test suite (pytest)
+        run: docker compose run --rm api pytest

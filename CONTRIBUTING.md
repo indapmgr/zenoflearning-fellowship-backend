@@ -93,13 +93,33 @@ def greet(name):
 
 ## Before Every Commit
 
-Run these three commands before every commit and make sure all pass:
+Run all three commands and make sure every one passes before you commit:
 
 ```bash
-docker compose run --rm api ruff format .
+docker compose run --rm api ruff format .     # auto-fixes formatting
+docker compose run --rm api ruff check .      # must report no issues
+docker compose run --rm api pytest            # all tests must pass
+```
+
+Then commit:
+```bash
+git add .
+git commit -m "FEL-XXX: your message here"
+```
+
+## Before Every Push
+
+Before pushing your branch and opening a PR, run the full check one more time:
+
+```bash
+docker compose run --rm api ruff format --check .   # no auto-fix, just verify
 docker compose run --rm api ruff check .
 docker compose run --rm api pytest
 ```
+
+All three must pass. If any fail, fix and commit before pushing.
+
+CI will run the exact same checks on your PR. If it fails in CI, it will not be merged.
 
 ---
 
@@ -116,9 +136,9 @@ FEL-015: add students crud
 Before opening a PR, confirm every item below:
 
 - [ ] Branched off `develop` and PR targets `develop`
-- [ ] All tests pass (`docker compose run --rm api pytest`)
-- [ ] Code is formatted (`docker compose run --rm api ruff format --check .`)
-- [ ] Ruff reports no issues (`docker compose run --rm api ruff check .`)
+- [ ] `docker compose run --rm api pytest` passes
+- [ ] `docker compose run --rm api ruff format --check .` passes
+- [ ] `docker compose run --rm api ruff check .` passes
 - [ ] All functions have type hints
 - [ ] No secrets or `.env` committed
 - [ ] No new dependencies added without maintainer approval
