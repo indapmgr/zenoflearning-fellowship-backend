@@ -126,6 +126,36 @@ uvicorn src.main:app --reload
 
 ---
 
+## Deployment
+
+This repo deploys to two Render servers automatically.
+
+| Server | Branch | URL |
+|---|---|---|
+| Dev | `develop` | https://zenoflearning-backend-dev.onrender.com |
+| Prod | `main` | https://zenoflearning-backend-prod.onrender.com |
+
+**How it works:**
+- Merge to `develop` → Render auto-deploys to dev server
+- Merge to `main` → Render auto-deploys to prod server
+- CI must pass before any merge is allowed
+
+**Health check (public, no auth):**
+```
+GET https://zenoflearning-backend-dev.onrender.com/health
+GET https://zenoflearning-backend-prod.onrender.com/health
+→ {"status": "ok"}
+```
+
+**Manual PR preview:**
+If you want to test a specific PR live before merging, go to the Render dashboard → select the dev service → manually deploy the PR branch. No automatic PR previews.
+
+**Coming later:**
+- PostgreSQL database
+- Authentication
+
+---
+
 ## AI Policy
 
 Interns must not use AI coding agents for implementation. See [CONTRIBUTING.md](CONTRIBUTING.md).
