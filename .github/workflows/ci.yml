@@ -35,5 +35,6 @@ jobs:
       - name: Run linter (ruff check)
         run: docker compose run --rm api ruff check .
 
-      - name: Run test suite (pytest)
+      - name: Run test suite (pytest + coverage)
         run: docker compose run --rm api pytest
+
